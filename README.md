@@ -2,9 +2,9 @@
   <img src="dashboard/public/emma-logo.png" alt="Emma" width="150" />
 </div>
 
-# Emma — Outbound AI Sales Agent
+# Emma: Outbound AI Sales Agent
 
-> **▶ [Demo call recording](#)** — _placeholder: paste a Loom/MP4 link to a real call here._
+> **▶ [Demo call recording](#)** &nbsp;_placeholder: paste a Loom/MP4 link to a real call here._
 
 An outbound sales-call AI agent built as a showcase for
 [QuantumLoopAI](https://www.quantumloopai.com), running entirely on
@@ -15,17 +15,16 @@ An outbound sales-call AI agent built as a showcase for
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <div align="center">
-  <img src="docs/screenshots/dashboard-demo.gif" alt="Emma dashboard — live call metrics, transcripts, lead scoring and bookings" width="100%" />
+  <img src="docs/screenshots/dashboard-demo.gif" alt="Emma dashboard: live call metrics, transcripts, lead scoring and bookings" width="100%" />
   <br/>
-  <sub><em>The control room: call metrics, lead scoring, full transcripts and bookings — running on demo seed data.</em></sub>
+  <sub><em>The control room: call metrics, lead scoring, full transcripts and bookings, running on demo seed data.</em></sub>
 </div>
 
 QuantumLoopAI's product **Emma** is an *inbound* AI receptionist for NHS GP
 surgeries. This project flips her around: **Emma now makes outbound B2B
-sales calls** — she rings UK GP practices, pitches the receptionist
+sales calls.** She rings UK GP practices, pitches the receptionist
 product, handles every objection, and either closes a pilot or books a
-meeting with the decision-maker. The meta-pitch writes itself: *Emma sells
-more Emmas.*
+meeting with the decision-maker. Emma sells more Emmas.
 
 ## How it works
 
@@ -54,7 +53,7 @@ flowchart LR
     DB --> DASH["Next.js dashboard<br/>calls · leads · bookings"]
 ```
 
-- **ElevenLabs Agents** is the single agent platform — it bundles the LLM
+- **ElevenLabs Agents** is the single agent platform. It bundles the LLM
   brain, the voice, speech recognition, and the native Twilio call
   orchestration. There is no separate LLM account and no media server.
 - **Twilio** contributes only the raw UK phone number. It is imported into
@@ -62,7 +61,7 @@ flowchart LR
 - This FastAPI server exists only so Emma can act mid-call: look up real
   calendar slots, book the meeting, and report the outcome.
 
-Emma's agent — prompt, voice, LLM, TTS — is built and edited in the
+Emma's agent (prompt, voice, LLM, TTS) is built and edited in the
 **ElevenLabs dashboard**. `src/emma/prompt.py` is the version-controlled
 reference copy of her system prompt and verified company facts.
 
@@ -70,7 +69,7 @@ reference copy of her system prompt and verified company facts.
 
 A Next.js control room reads every call from the FastAPI backend: live
 metrics, rules-based lead scoring, full transcripts, and upcoming bookings.
-_(Screens below use the bundled demo seed data — no real prospects.)_
+_(Screens below use the bundled demo seed data, no real prospects.)_
 
 | Overview | Call transcript + scoring |
 |:---:|:---:|
@@ -84,7 +83,7 @@ _(Screens below use the bundled demo seed data — no real prospects.)_
 |---|---|---|
 | ElevenLabs | The agent platform: brain + voice + calling | elevenlabs.io |
 | Twilio | A UK (+44) phone number to call *from* | console.twilio.com |
-| Cal.com | Books the meeting *(optional — see below)* | cal.com |
+| Cal.com | Books the meeting *(optional, see below)* | cal.com |
 
 > **Cal.com is optional.** Without it, `check_availability` and
 > `book_meeting` fall back to provisional weekday slots so the whole demo
@@ -93,18 +92,18 @@ _(Screens below use the bundled demo seed data — no real prospects.)_
 ## Setup
 
 The agent is built in the **ElevenLabs dashboard**. The CLI only drives
-the phone side — it never creates or edits the agent.
+the phone side; it never creates or edits the agent.
 
 **1. Build Emma's agent in ElevenLabs**
 
 In the ElevenLabs dashboard, create an agent and configure:
-- **System prompt** — paste the rendered prompt from `src/emma/prompt.py`
-- **First message** — Emma's opener
-- **Voice** — a British female voice
-- **LLM** — a strong model (e.g. Claude)
-- **TTS model family** — Flash (lowest latency for live calls)
+- **System prompt:** paste the rendered prompt from `src/emma/prompt.py`
+- **First message:** Emma's opener
+- **Voice:** a British female voice
+- **LLM:** a strong model (e.g. Claude)
+- **TTS model family:** Flash (lowest latency for live calls)
 
-Copy the agent's **ID** — you need it in step 2.
+Copy the agent's **ID**; you need it in step 2.
 
 **2. Install + configure locally**
 
@@ -137,29 +136,29 @@ webhook tools to the agent in the dashboard:
 
 ```bash
 emma serve             # webhook server on :8000
-ngrok http 8000        # public URL -> paste into SERVER_URL in .env
+ngrok http 8000        # public URL, paste into SERVER_URL in .env
 ```
 
 Then in the dashboard add three webhook tools pointing at
 `<SERVER_URL>/tools/check-availability`, `/tools/book-meeting` and
 `/tools/log-call-outcome`. Without them Emma still pitches and closes
-verbally — she just cannot complete a real booking.
+verbally; she just cannot complete a real booking.
 
 ## The objection test
 
 Answer the call and **keep saying "no"**. Emma is built to treat a casual
-"no" as an opening, not an ending. Each refusal she:
+"no" as an opening, not an ending. On each refusal she:
 
 1. acknowledges it sincerely,
 2. reframes with a **fresh** angle (never repeats a line),
-3. walks *down the ask ladder* — pilot → demo → 15-min call → a
-   cancel-anytime calendar hold,
+3. walks down the ask ladder (pilot, demo, 15-min call, a
+   cancel-anytime calendar hold),
 4. steers back toward booking the meeting.
 
 She only stops on a **firm, explicit** refusal ("remove me", "do not call
-again") or a hang-up — politeness alone is not a stop signal.
+again") or a hang-up. Politeness alone is not a stop signal.
 
-Ask her *"are you a robot?"* — she will happily confirm she is an AI and
+Ask her *"are you a robot?"* and she will happily confirm she is an AI and
 turn that into the live demo of the product.
 
 Watch `call_log.jsonl` while the call runs to see her tool calls and the
@@ -181,20 +180,20 @@ tests/               unit tests
 ```
 
 `src/emma/prompt.py` is the version-controlled reference copy of Emma's
-sales playbook. The **live** prompt is the ElevenLabs dashboard agent —
-edit it there, and mirror notable changes back to `prompt.py`.
+sales playbook. The **live** prompt is the ElevenLabs dashboard agent.
+Edit it there, and mirror notable changes back to `prompt.py`.
 
 ## Compliance note (before calling real leads)
 
 Test-calling your own number is fine. Calling **real UK businesses**
 brings rules:
 
-- **Ofcom** — disclose that the caller is an AI/automated system. Emma is
+- **Ofcom:** disclose that the caller is an AI/automated system. Emma is
   prompted to confirm this honestly when asked; for live campaigns make it
   proactive.
-- **TPS / CTPS** — screen numbers against the Telephone Preference
+- **TPS / CTPS:** screen numbers against the Telephone Preference
   Service registers before dialling.
-- **GDPR** — have a lawful basis for the call and honour do-not-call
+- **GDPR:** have a lawful basis for the call and honour do-not-call
   requests immediately (Emma logs `do_not_call` outcomes).
 
 This repo is a showcase. Add explicit consent and TPS screening before any
@@ -207,14 +206,6 @@ pip install -e .
 pytest
 ```
 
-## Built with AI-assisted development
-
-Built solo using AI-assisted development (Claude Code): the FastAPI tool
-server, the Cal.com client, the lead-scoring engine, the Next.js dashboard,
-and the test suite. Emma's sales playbook in `src/emma/prompt.py` was authored
-and iterated the same way. The architecture decisions, integration design, and
-review were mine.
-
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
