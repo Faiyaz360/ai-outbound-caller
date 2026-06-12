@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="dashboard/public/emma-logo.png" alt="Emma" width="150" />
+</div>
+
 # Emma — Outbound AI Sales Agent
 
 > **▶ [Demo call recording](#)** — _placeholder: paste a Loom/MP4 link to a real call here._
@@ -19,20 +23,29 @@ more Emmas.*
 
 ## How it works
 
-```
-  emma call  ──▶  ElevenLabs Agents  ──▶  Twilio (+44 number)  ──▶  prospect
-                   │
-                   │  ElevenLabs runs the whole call:
-                   ├─ LLM brain     discovery, objections, closing
-                   ├─ voice         Emma's British ElevenLabs voice
-                   ├─ ASR           speech → text
-                   └─ orchestration turn-taking, interruption, telephony
-                   │
-                   └─ webhooks ──▶  this FastAPI server
-                                      ├─ /tools/check-availability  (Cal.com)
-                                      ├─ /tools/book-meeting         (Cal.com)
-                                      ├─ /tools/log-call-outcome     (call_log.jsonl)
-                                      └─ /webhook/post-call          (HMAC-verified)
+```mermaid
+flowchart LR
+    CLI["emma call"] --> EL
+    subgraph EL["ElevenLabs Agents"]
+        direction TB
+        LLM["LLM brain<br/>discovery · objections · close"]
+        V["British voice (TTS)"]
+        ASR["Speech recognition"]
+        ORCH["Call orchestration"]
+    end
+    EL --> TW["Twilio<br/>+44 number"] --> P["Prospect<br/>GP surgery"]
+    EL -. webhooks .-> API
+    subgraph API["FastAPI server"]
+        direction TB
+        T1["/tools/check-availability"]
+        T2["/tools/book-meeting"]
+        T3["/tools/log-call-outcome"]
+        PC["/webhook/post-call<br/>HMAC-verified"]
+    end
+    T1 --> CAL["Cal.com"]
+    T2 --> CAL
+    API --> DB[("emma.db")]
+    DB --> DASH["Next.js dashboard<br/>calls · leads · bookings"]
 ```
 
 - **ElevenLabs Agents** is the single agent platform — it bundles the LLM
@@ -46,6 +59,18 @@ more Emmas.*
 Emma's agent — prompt, voice, LLM, TTS — is built and edited in the
 **ElevenLabs dashboard**. `src/emma/prompt.py` is the version-controlled
 reference copy of her system prompt and verified company facts.
+
+## Dashboard
+
+A Next.js control room reads every call from the FastAPI backend: live
+metrics, rules-based lead scoring, full transcripts, and upcoming bookings.
+_(Screens below use the bundled demo seed data — no real prospects.)_
+
+| Overview | Call transcript + scoring |
+|:---:|:---:|
+| [![Overview](docs/screenshots/overview.png)](docs/screenshots/overview.png) | [![Call detail](docs/screenshots/call-detail.png)](docs/screenshots/call-detail.png) |
+| **Calls** | **Leads by tier** |
+| [![Calls](docs/screenshots/calls.png)](docs/screenshots/calls.png) | [![Leads](docs/screenshots/leads.png)](docs/screenshots/leads.png) |
 
 ## Prerequisites
 
