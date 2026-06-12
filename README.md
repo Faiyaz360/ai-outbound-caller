@@ -14,6 +14,12 @@ An outbound sales-call AI agent built as a showcase for
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+<div align="center">
+  <img src="docs/screenshots/dashboard-demo.gif" alt="Emma dashboard — live call metrics, transcripts, lead scoring and bookings" width="100%" />
+  <br/>
+  <sub><em>The control room: call metrics, lead scoring, full transcripts and bookings — running on demo seed data.</em></sub>
+</div>
+
 QuantumLoopAI's product **Emma** is an *inbound* AI receptionist for NHS GP
 surgeries. This project flips her around: **Emma now makes outbound B2B
 sales calls** — she rings UK GP practices, pitches the receptionist
