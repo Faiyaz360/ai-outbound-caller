@@ -1,0 +1,18 @@
+# Secrets and local state
+.env
+.emma_state.json
+
+# Runtime call data (regenerate with scripts/seed_dashboard.py)
+emma.db
+*.db
+*.db-shm
+*.db-wal
+call_log.jsonl
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantumloop-emma-outbound"
+version = "0.1.0"
+description = "Emma - outbound AI sales agent for QuantumLoopAI"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Syed Tanvir Faiyaz" }]
+readme = "README.md"
+
+[project.scripts]
+emma = "emma.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
